@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Perspectiva - Natalia Caro</title>
+  </head>
+  <body>
+    <script src="https://threejs.org/build/three.min.js"></script>
+    <script>
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(
+        75,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        1000
+      );
+
+      const renderer = new THREE.WebGLRenderer();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.body.appendChild(renderer.domElement);
+
+      const geometry = new THREE.BoxGeometry();
+      const vertices= [];
+      geometry.vertices.push(new THREE.Vector3(-1, -1, 1),
+        new THREE.Vector3(1, -1, 1),
+        new THREE.Vector3(1, 1, 1),
+        new THREE.Vector3(-1, 1, 1),
+        new THREE.Vector3(-1, -1, -1),
+        new THREE.Vector3(1, -1, -1),
+        new THREE.Vector3(1, 1, -1),
+        new THREE.Vector3(-1, 1, -1)
+      );
+
+      const faces= [];
+      geometry.faces.push(new THREE.Face3(0, 1, 2),
+        new THREE.Face3(0, 2, 3),
+        new THREE.Face3(4, 6, 5),
+        new THREE.Face3(4, 7, 6),
+        new THREE.Face3(0, 4, 5),
+        new THREE.Face3(0, 5, 1),
+        new THREE.Face3(1, 5, 6),
+        new THREE.Face3(1, 6, 2),
+        new THREE.Face3(2, 6, 7),
+        new THREE.Face3(2, 7, 3),
+        new THREE.Face3(4, 0, 3),
+        new THREE.Face3(4, 3, 7)
+      );
+
+      const material = new THREE.MeshBasicMaterial({color: 0xffffff,wireframe: true});
+      const cube = new THREE.Mesh(geometry, material);
+      scene.add(cube);
+
+      camera.position.z = 5;
+
+      function animate() {
+        requestAnimationFrame(animate);
+        cube.rotation.x += 0.01;
+        cube.rotation.y += 0.01;
+        renderer.render(scene, camera);
+      }
+
+      animate();
+    </script>
+  </body>
+</html>
